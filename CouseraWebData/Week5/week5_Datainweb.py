@@ -48,6 +48,63 @@ XSD Structure:
 		<xs:element name="weeks" type="xs:integer"/>
 	</xs:sequence>
 </xs:complexType>
+A simple element is an XML element that contains only text. It cannot contain any other elements or attributes.
+
+
+======
+Parsing XML
+
+import xml.etree.ElementTree as ET
+data = '''<person>
+	<name>Chuck</name>
+	<phone type="intl">
+		+1 734 303 4456
+	</phone>
+	<email hide="yes"/>
+</person>
+'''
+tree = ET.fromstring(data)
+# extract data and give us back a tree
+print('Name:',tree.find('name').text)
+# from the html file, find the name <tree>
+print('Attr:',tree.find('email').get('hide'))
+# get the attribute value hide in the tag <email>
+
+#if there are multiple tags using findall:
+import xml.etree.ElementTree as ET
+input = '''<stuff>
+	<users>
+		<user x ='2'>
+			<id>001</id>
+			<name>Chuck</name>
+		</user>
+		<user x="7">
+			<id>009</id>
+			<name>Brent</name>
+		</user>
+	</users>
+</stuff>'''
+
+stuff = ET.fromstring(data)
+lst = stuff.findall('users/user')
+#extract many little tree's information ['tree1','tree2']
+print('User count:',len(lst))
+for item in lst:
+	print('Name',item.find('name').text)
+	print('Id',item.find('id').text)
+	print('Attribute',item.get('x'))
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
